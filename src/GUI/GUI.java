@@ -7,11 +7,14 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.JTableHeader;
 import javax.xml.crypto.dsig.spec.HMACParameterSpec;
 
 public class GUI {
 
     private final Color backgroundColor = new Color(215, 226, 238);
+    private final Color transparentColor = new Color(0, 0, 0, 0);
+    private final Font labelsInfoFont = new Font("Segoe UI", Font.PLAIN, 20);
 
     public static JButton addButton(String imgPath) throws IOException {
         BufferedImage buttonIcon = ImageIO.read(new File(imgPath));
@@ -57,24 +60,69 @@ public class GUI {
         return backpackImage;
     }
 
+    private JPanel CreateBackpackInfo() throws IOException {
+        JPanel info = new JPanel();
+        info.setLayout(new BoxLayout(info, BoxLayout.X_AXIS));
+
+        String[][] data = {
+                {"Kundan Kumar Jha", "4031", "CSE", " "},
+                {"Kundan Kumar Jha", "4031", "CSE", " "},
+                {"Kundan Kumar Jha", "4031", "CSE", " "},
+                {"Kundan Kumar Jha", "4031", "CSE", " "},
+                {"Kundan Kumar Jha", "4031", "CSE", " "},
+                {"Kundan Kumar Jha", "4031", "CSE", " "},
+                {"Kundan Kumar Jha", "4031", "CSE", " "},
+                {"Kundan Kumar Jha", "4031", "CSE", " "},
+                {"Kundan Kumar Jha", "4031", "CSE", " "},
+                {"Kundan Kumar Jha", "4031", "CSE", " "},
+                {"Kundan Kumar Jha", "4031", "CSE", " "},
+                {"Anand Jha", "6014", "IT", " "}
+        };
+
+        // Column Names
+        String[] columnNames = {"Name", "Roll Number", "Department"};
+
+        JTable backpackInfo = new JTable(data, columnNames);
+        backpackInfo.setBackground(backgroundColor);
+
+        JTableHeader header = backpackInfo.getTableHeader();
+        header.setBackground(transparentColor);
+        backpackInfo.setTableHeader(header);
+
+        backpackInfo.setRowHeight(50);
+        backpackInfo.setFont(labelsInfoFont);
+        backpackInfo.setShowGrid(false);
+
+        JScrollPane backpackScroll = new JScrollPane(backpackInfo);
+        backpackScroll.setBackground(transparentColor);
+
+
+        info.add(backpackScroll);
+        info.setBackground(transparentColor);
+
+        return info;
+    }
+
     public GUI() throws IOException {
         JFrame mainscene = new JFrame("Laba 2");
-        JPanel window = new JPanel();
-        window.setLayout(new BoxLayout(window, BoxLayout.X_AXIS));
+        JPanel firstLayer = new JPanel();
+        firstLayer.setLayout(new BoxLayout(firstLayer, BoxLayout.X_AXIS));
 
 
         JPanel buttonsPanel = CreateButtonsPanel();
         JPanel backpackImage = CreateBackpackImage();
-        window.add(backpackImage);
-        window.add(buttonsPanel);
-        window.setBounds(0, 0, 1920, 1080);
+        firstLayer.add(backpackImage);
+        firstLayer.add(buttonsPanel);
+        firstLayer.setBounds(0, 0, 1920, 1080);
 
 
-        JPanel secondLayer = CreateButtonsPanel();
-        secondLayer.setBounds(1920 / 4, 1080 / 4, 200, 200);
+        JPanel secondLayer = CreateBackpackInfo();
+        secondLayer.setBounds(220, 350, 820, 450);
 
         JLayeredPane layers = new JLayeredPane();
-        layers.add(window, 0, 0);
+        // backpack image and button
+        layers.add(firstLayer, 0, 0);
+        // backpack info
         layers.add(secondLayer, 1, 1);
         layers.setVisible(true);
 
