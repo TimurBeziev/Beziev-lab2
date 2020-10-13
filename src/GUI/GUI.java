@@ -10,11 +10,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.JTableHeader;
 import javax.xml.crypto.dsig.spec.HMACParameterSpec;
 
-public class GUI {
+import Controller.Controller;
 
+public class GUI {
+    Controller controller;
     private final Color backgroundColor = new Color(215, 226, 238);
     private final Color transparentColor = new Color(0, 0, 0, 0);
-    private final Font labelsInfoFont = new Font("Segoe UI", Font.PLAIN, 20);
+    private final Font labelsInfoFont = new Font("Segoe UI", Font.PLAIN, 50);
 
     public static JButton addButton(String imgPath) throws IOException {
         BufferedImage buttonIcon = ImageIO.read(new File(imgPath));
@@ -42,6 +44,7 @@ public class GUI {
         JButton addButton = addButton("src/img/ADD BUTTON.png");
         JButton deleteButton = addButton("src/img/DELETE BUTTON.png");
         JButton phdButton = addButton("src/img/PHD.png");
+
         buttonsPanel.add(addButton);
         buttonsPanel.add(deleteButton);
         buttonsPanel.add(phdButton);
@@ -65,37 +68,35 @@ public class GUI {
         info.setLayout(new BoxLayout(info, BoxLayout.X_AXIS));
 
         String[][] data = {
-                {"Kundan Kumar Jha", "4031", "CSE", " "},
-                {"Kundan Kumar Jha", "4031", "CSE", " "},
-                {"Kundan Kumar Jha", "4031", "CSE", " "},
-                {"Kundan Kumar Jha", "4031", "CSE", " "},
-                {"Kundan Kumar Jha", "4031", "CSE", " "},
-                {"Kundan Kumar Jha", "4031", "CSE", " "},
-                {"Kundan Kumar Jha", "4031", "CSE", " "},
-                {"Kundan Kumar Jha", "4031", "CSE", " "},
-                {"Kundan Kumar Jha", "4031", "CSE", " "},
-                {"Kundan Kumar Jha", "4031", "CSE", " "},
-                {"Kundan Kumar Jha", "4031", "CSE", " "},
-                {"Anand Jha", "6014", "IT", " "}
+                {"Parallelepiped", "4031.290"},
+                {"Parallelepiped", "4031.290"},
+                {"Parallelepiped", "4031.290"},
+                {"Parallelepiped", "4031.290"},
+                {"Parallelepiped", "4031.290"},
+                {"Parallelepiped", "4031.290"},
+                {"Parallelepiped", "4031.290"},
+                {"Parallelepiped", "4031.290"},
+                {"Parallelepiped", "4031.290"},
+                {"Parallelepiped", "4031.290"},
+                {"Parallelepiped", "4031.290"},
+                {"Parallelepiped", "4031.290"}
         };
 
         // Column Names
-        String[] columnNames = {"Name", "Roll Number", "Department"};
+        String[] columnNames = {"Item", "Volume"};
 
         JTable backpackInfo = new JTable(data, columnNames);
         backpackInfo.setBackground(backgroundColor);
 
-        JTableHeader header = backpackInfo.getTableHeader();
-        header.setBackground(transparentColor);
-        backpackInfo.setTableHeader(header);
-
-        backpackInfo.setRowHeight(50);
+        backpackInfo.setColumnSelectionAllowed(false);
+        backpackInfo.getTableHeader().setBackground(backgroundColor);
+        backpackInfo.setRowHeight(70);
         backpackInfo.setFont(labelsInfoFont);
         backpackInfo.setShowGrid(false);
 
         JScrollPane backpackScroll = new JScrollPane(backpackInfo);
-        backpackScroll.setBackground(transparentColor);
-
+        backpackScroll.setBackground(backgroundColor);
+        backpackScroll.getVerticalScrollBar().setBackground(backgroundColor);
 
         info.add(backpackScroll);
         info.setBackground(transparentColor);
@@ -107,6 +108,7 @@ public class GUI {
         JFrame mainscene = new JFrame("Laba 2");
         JPanel firstLayer = new JPanel();
         firstLayer.setLayout(new BoxLayout(firstLayer, BoxLayout.X_AXIS));
+        controller = new Controller();
 
 
         JPanel buttonsPanel = CreateButtonsPanel();
