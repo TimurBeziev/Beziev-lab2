@@ -1,12 +1,15 @@
 package GUI;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.basic.BasicOptionPaneUI;
 import javax.swing.table.JTableHeader;
 import javax.xml.crypto.dsig.spec.HMACParameterSpec;
 
@@ -14,6 +17,8 @@ import Controller.Controller;
 
 public class GUI {
     Controller controller;
+    JPanel addElementsPanel;
+    JLayeredPane layers;
     private final Color backgroundColor = new Color(215, 226, 238);
     private final Color transparentColor = new Color(0, 0, 0, 0);
     private final Font labelsInfoFont = new Font("Segoe UI", Font.PLAIN, 50);
@@ -42,6 +47,14 @@ public class GUI {
         JPanel buttonsPanel = new JPanel(new GridLayout(3, 1));
         buttonsPanel.setBackground(backgroundColor);
         JButton addButton = addButton("src/img/ADD BUTTON.png");
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                layers.add(addElementsPanel, 2, 2);
+//                System.out.println("hello");
+
+            }
+        });
         JButton deleteButton = addButton("src/img/DELETE BUTTON.png");
         JButton phdButton = addButton("src/img/PHD.png");
 
@@ -104,12 +117,19 @@ public class GUI {
         return info;
     }
 
+    private JPanel addElementPanel() throws IOException {
+        JPanel addElementPanel = new JPanel(new GridLayout(3, 1));
+        addElementPanel.setBackground(backgroundColor);
+//        addElementPanel.add()
+        addElementPanel.setBounds(100, 100, 1000, 600);
+        return addElementPanel;
+    }
+
     public GUI() throws IOException {
         JFrame mainscene = new JFrame("Laba 2");
         JPanel firstLayer = new JPanel();
         firstLayer.setLayout(new BoxLayout(firstLayer, BoxLayout.X_AXIS));
         controller = new Controller();
-
 
         JPanel buttonsPanel = CreateButtonsPanel();
         JPanel backpackImage = CreateBackpackImage();
@@ -117,21 +137,38 @@ public class GUI {
         firstLayer.add(buttonsPanel);
         firstLayer.setBounds(0, 0, 1920, 1080);
 
-
         JPanel secondLayer = CreateBackpackInfo();
         secondLayer.setBounds(220, 350, 820, 450);
 
-        JLayeredPane layers = new JLayeredPane();
+        addElementsPanel = addElementPanel();
+
+        layers = new JLayeredPane();
         // backpack image and button
         layers.add(firstLayer, 0, 0);
         // backpack info
         layers.add(secondLayer, 1, 1);
+
+
         layers.setVisible(true);
+
 
         mainscene.add(layers);
         mainscene.setSize(1920, 1080);
         mainscene.setMinimumSize(new Dimension(1920, 1080));
         mainscene.setMaximumSize(new Dimension(1920, 1080));
         mainscene.setVisible(true);
+    }
+}
+
+class AddButtonListener implements ActionListener {
+    JPanel addElPanel;
+
+    AddButtonListener(JPanel addElementsPanel) {
+        addElPanel = addElementsPanel;
+    }
+
+    public void actionPerformed(ActionEvent e) {
+//        addElPanel.setVisible(false);
+        System.out.println("Button1 has been clicked");
     }
 }
