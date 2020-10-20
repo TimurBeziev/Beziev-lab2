@@ -73,21 +73,6 @@ public class GUI extends CreateGUIItems {
         JPanel info = new JPanel();
         info.setLayout(new BoxLayout(info, BoxLayout.X_AXIS));
 
-//        String[][] data = {
-//                {"Parallelepiped", "4031.290"},
-//                {"Parallelepiped", "4031.290"},
-//                {"Parallelepiped", "4031.290"},
-//                {"Parallelepiped", "4031.290"},
-//                {"Parallelepiped", "4031.290"},
-//                {"Parallelepiped", "4031.290"},
-//                {"Parallelepiped", "4031.290"},
-//                {"Parallelepiped", "4031.290"},
-//                {"Parallelepiped", "4031.290"},
-//                {"Parallelepiped", "4031.290"},
-//                {"Parallelepiped", "4031.290"},
-//                {"Parallelepiped", "4031.290"}
-//        };
-
         // Column Names
 //        String[] columnNames = {"Item", "Volume"};
         JTable backpackInfo = new JTable();
@@ -99,6 +84,7 @@ public class GUI extends CreateGUIItems {
 //        JTable backpackInfo = new JTable(data, columnNames);
         backpackInfo.setBackground(backgroundColor);
 
+        backpackInfo.setEnabled(false);
         backpackInfo.setColumnSelectionAllowed(false);
         backpackInfo.getTableHeader().setBackground(backgroundColor);
         backpackInfo.setRowHeight(70);

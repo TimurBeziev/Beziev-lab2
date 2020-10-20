@@ -7,10 +7,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class CreateGUIItems extends JPanel{
-     final Color backgroundColor = new Color(215, 226, 238);
-     final Color transparentColor = new Color(0, 0, 0, 0);
-     final Font labelsInfoFont = new Font("Segoe UI", Font.PLAIN, 50);
+public class CreateGUIItems extends JPanel {
+    final Color backgroundColor = new Color(215, 226, 238);
+    final Color foregroundColor = new Color(227, 237, 247);
+    final Color transparentColor = new Color(0, 0, 0, 0);
+    final Font labelsInfoFont = new Font("Segoe UI", Font.PLAIN, 50);
+    final Font labelsInBackpackFont = new Font("Segoe UI", Font.PLAIN, 45);
 
     static JButton addButton(String imgPath) throws IOException {
         BufferedImage buttonIcon = ImageIO.read(new File(imgPath));
@@ -32,7 +34,7 @@ public class CreateGUIItems extends JPanel{
         return label;
     }
 
-     JPanel CreateImage(String img_path) throws IOException {
+    JPanel CreateImage(String img_path) throws IOException {
         JPanel backpackImage = new JPanel();
         backpackImage.setBackground(backgroundColor);
         JLabel backpackImg = addImage(img_path);
