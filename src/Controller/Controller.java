@@ -82,25 +82,31 @@ public class Controller {
 
     public class PHDButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            phdPannel.setVisible(true);
+            if (isAnyButtonEnabled) {
+                phdPannel.setVisible(true);
+                isAnyButtonEnabled = false;
+            }
         }
     }
 
     public class PHDImageButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             phdPannel.setVisible(false);
+            isAnyButtonEnabled = true;
         }
     }
 
     public class DeleteButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            int selectedIndex = gui.GetSelectedElement();
-            if (selectedIndex >= 0) {
-                backpack.DeleteElement(selectedIndex);
-            }
+            if (isAnyButtonEnabled) {
+                int selectedIndex = gui.GetSelectedElement();
+                if (selectedIndex >= 0) {
+                    backpack.DeleteElement(selectedIndex);
+                }
 
-            String volume = String.format("%.1f", backpack.GetBackpackVolume());
-            gui.UpdateBackpackInfo(backpack.getShapesInfo(), volume);
+                String volume = String.format("%.1f", backpack.GetBackpackVolume());
+                gui.UpdateBackpackInfo(backpack.getShapesInfo(), volume);
+            }
         }
     }
 
