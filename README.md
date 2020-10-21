@@ -1,7 +1,10 @@
 # Beziev-lab2
-Лаборатоная работа. Java Swing
+Лаборатоная работа 2. Java Swing
 
 ![alt text](https://github.com/TimurBeziev/Beziev-lab2/blob/Lab2/src/img/1.png)
 ![alt text](https://github.com/TimurBeziev/Beziev-lab2/blob/Lab2/src/img/2.png)
 ![alt text](https://github.com/TimurBeziev/Beziev-lab2/blob/Lab2/src/img/3.png)
 
+С помощью Add можно добавить элемент в рюкзак.
+Delete удаляет один выбранный элемент из рюкзака.
+PHD -- пожелать хорошего дня. Магическая кнопка, которая повышает настроение!
