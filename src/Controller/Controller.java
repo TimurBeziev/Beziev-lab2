@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.util.Objects;
 
 import GUI.AddElementsPanel;
+import GUI.PHDPannel;
 
 import javax.swing.*;
 
@@ -21,6 +22,8 @@ public class Controller {
     Backpack backpack;
     JPanel addDialogBackground;
     JPanel addDialogItems;
+    JPanel phdPannel;
+    PHDPannel pannel;
     AddElementsPanel addElementsPanel;
     boolean isAnyButtonEnabled = true;
 
@@ -30,6 +33,10 @@ public class Controller {
 
         String volume = String.format("%.1f", backpack.GetBackpackVolume());
         gui.SetBackpackVolume(volume);
+
+        pannel = new PHDPannel();
+        phdPannel = pannel.GetPGDPannel();
+        phdPannel.setVisible(false);
 
         // Создаю панельку с добавлением элементов и связываю кнопочки
         addElementsPanel = new AddElementsPanel();
@@ -47,12 +54,20 @@ public class Controller {
 
         gui.AddPanelToLayers(addDialogBackground, 2, 2);
         gui.AddPanelToLayers(addDialogItems, 3, 3);
+        gui.AddPanelToLayers(phdPannel, 4, 4);
 
         ActionListener openAddDialogListener = new AddButtonListener();
         gui.SetAddButtonListener(openAddDialogListener);
 
         ActionListener deleteElementListner = new DeleteButtonListener();
         gui.SetDeleteButtonListener(deleteElementListner);
+
+        ActionListener phdButtonListner = new PHDButtonListener();
+        gui.SetPHDButtonListener(phdButtonListner);
+
+        ActionListener phdImageButtonListner = new PHDImageButtonListener();
+        pannel.SetCancelButtonListener(phdImageButtonListner);
+
     }
 
     public class AddButtonListener implements ActionListener {
@@ -62,6 +77,18 @@ public class Controller {
                 addDialogBackground.setVisible(true);
                 isAnyButtonEnabled = false;
             }
+        }
+    }
+
+    public class PHDButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            phdPannel.setVisible(true);
+        }
+    }
+
+    public class PHDImageButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            phdPannel.setVisible(false);
         }
     }
 

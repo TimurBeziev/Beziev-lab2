@@ -129,6 +129,10 @@ public class GUI extends CreateGUIItems {
         deleteButton.addActionListener(listener);
     }
 
+    public void SetPHDButtonListener(ActionListener listener) {
+        phdButton.addActionListener(listener);
+    }
+
     public void AddPanelToLayers(JPanel panel, int constraints, int index) {
         layers.add(panel, constraints, index);
     }
@@ -150,9 +154,9 @@ public class GUI extends CreateGUIItems {
         }
     }
 
-    public JTable GetTable() {
-        return backpackInfo;
-    }
+//    public JTable GetTable() {
+//        return backpackInfo;
+//    }
 
     public void RemoveElement(int index) {
         model.removeRow(index);
