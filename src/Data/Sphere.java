@@ -12,8 +12,7 @@ public class Sphere extends Shape {
 
     @Override
     public String toString() {
-        String volume = String.format("%.1f",getVolume());
-        return "Sphere              " + "\t\t\t" + volume;
+        return "Sphere";
     }
 
 

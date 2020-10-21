@@ -10,6 +10,7 @@ import java.io.IOException;
 public class CreateGUIItems extends JPanel {
     final Color backgroundColor = new Color(215, 226, 238);
     final Color foregroundColor = new Color(227, 237, 247);
+    final Color textFont = new Color(49, 69, 106);
     final Color transparentColor = new Color(0, 0, 0, 0);
     final Font labelsInfoFont = new Font("Segoe UI", Font.PLAIN, 50);
     final Font labelsInBackpackFont = new Font("Segoe UI", Font.PLAIN, 45);

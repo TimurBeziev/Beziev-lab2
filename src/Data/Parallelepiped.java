@@ -14,8 +14,7 @@ public class Parallelepiped extends Shape {
 
     @Override
     public String toString() {
-        String volume = String.format("%.1f",getVolume());
-        return "Parallelepiped   " + "\t\t\t" + volume;
+        return "Parallelepiped";
     }
 
     private final double width;

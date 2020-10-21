@@ -12,8 +12,7 @@ public class Cube extends Shape {
 
     @Override
     public String toString() {
-        String volume = String.format("%.1f",getVolume());
-        return "Cube                 " + "\t\t\t" + volume;
+        return "Cube";
     }
 
     private final double length;

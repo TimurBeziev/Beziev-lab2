@@ -5,16 +5,17 @@ public class Cylinder extends Shape {
         this.radius = r;
         this.height = h;
     }
+
     @Override
     public double getVolume() {
-        return Math.PI * radius*radius * height;
+        return Math.PI * radius * radius * height;
     }
 
     @Override
     public String toString() {
-        String volume = String.format("%.1f",getVolume());
-        return "Cylinder            " + "\t\t\t" + volume;
+        return "Cylinder";
     }
+
     private final double radius;
     private final double height;
 }

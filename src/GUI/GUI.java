@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -14,16 +16,19 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.xml.crypto.dsig.spec.HMACParameterSpec;
 
+import Data.Shape;
 import GUI.AddElementsPanel;
 
 
 public class GUI extends CreateGUIItems {
-    JLayeredPane layers;
-    JButton addButton;
-    JButton deleteButton;
-    JButton phdButton;
-    DefaultTableModel model;
-    String[][] data = {};
+    private final JLayeredPane layers;
+    private JLabel backpackCapacity;
+    private JTable backpackInfo;
+    private JButton addButton;
+    private JButton deleteButton;
+    private JButton phdButton;
+    private DefaultTableModel model;
+    private double vol;
 
     public GUI() throws IOException {
         JFrame mainscene = new JFrame("Laba 2");
@@ -38,6 +43,15 @@ public class GUI extends CreateGUIItems {
 
         JPanel secondLayer = CreateBackpackInfo();
         secondLayer.setBounds(220, 350, 820, 450);
+        secondLayer.setBackground(Color.yellow);
+
+        JPanel thirdLayer = new JPanel();
+        backpackCapacity = new JLabel();
+        backpackCapacity.setFont(labelsInfoFont);
+        backpackCapacity.setForeground(textFont);
+        thirdLayer.setBackground(foregroundColor);
+        thirdLayer.add(backpackCapacity);
+        thirdLayer.setBounds(650, 194, 200, 70);
 
 
         layers = new JLayeredPane();
@@ -45,6 +59,7 @@ public class GUI extends CreateGUIItems {
         AddPanelToLayers(firstLayer, 0, 0);
         // backpack info
         AddPanelToLayers(secondLayer, 1, 1);
+        AddPanelToLayers(thirdLayer, 2, 2);
         layers.setVisible(true);
 
         mainscene.add(layers);
@@ -73,19 +88,20 @@ public class GUI extends CreateGUIItems {
         JPanel info = new JPanel();
         info.setLayout(new BoxLayout(info, BoxLayout.X_AXIS));
 
-        // Column Names
-//        String[] columnNames = {"Item", "Volume"};
-        JTable backpackInfo = new JTable();
+
+        backpackInfo = new JTable();
+        backpackInfo.setDefaultEditor(Object.class, null);
+
         model = new DefaultTableModel();
-        backpackInfo.setModel(model);
         model.addColumn("Item");
         model.addColumn("Volume");
+ 
+        backpackInfo.setModel(model);
 
-//        JTable backpackInfo = new JTable(data, columnNames);
         backpackInfo.setBackground(backgroundColor);
 
-        backpackInfo.setEnabled(false);
-        backpackInfo.setColumnSelectionAllowed(false);
+//        backpackInfo.setEnabled(fals
+//        backpackInfo.setColumnSelectionAllowed(false);
         backpackInfo.getTableHeader().setBackground(backgroundColor);
         backpackInfo.setRowHeight(70);
         backpackInfo.setFont(labelsInfoFont);
@@ -96,21 +112,50 @@ public class GUI extends CreateGUIItems {
         backpackScroll.getVerticalScrollBar().setBackground(backgroundColor);
 
         info.add(backpackScroll);
-        info.setBackground(transparentColor);
+        info.setBackground(backgroundColor);
 
         return info;
+    }
+
+    public int GetSelectedElement() {
+        return backpackInfo.getSelectedRow();
     }
 
     public void SetAddButtonListener(ActionListener listener) {
         addButton.addActionListener(listener);
     }
 
+    public void SetDeleteButtonListener(ActionListener listener) {
+        deleteButton.addActionListener(listener);
+    }
+
     public void AddPanelToLayers(JPanel panel, int constraints, int index) {
         layers.add(panel, constraints, index);
     }
 
-    public void AddBackpackInfo(String backpackItemName,String volume) {
-        model.addRow(new Object[]{backpackItemName, volume});
+    public void SetBackpackVolume(String volume) {
+        backpackCapacity.setText(volume);
+    }
+
+    public void UpdateBackpackInfo(DefaultTableModel model1, String backpackVolume) {
+        ClearAll();
+        model = model1;
+        backpackInfo.setModel(model);
+        backpackCapacity.setText(backpackVolume);
+    }
+
+    private void ClearAll() {
+        for (int i = 0; i < model.getRowCount(); i++) {
+            RemoveElement(i);
+        }
+    }
+
+    public JTable GetTable() {
+        return backpackInfo;
+    }
+
+    public void RemoveElement(int index) {
+        model.removeRow(index);
     }
 
 }

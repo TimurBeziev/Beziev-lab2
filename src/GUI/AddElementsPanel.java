@@ -5,6 +5,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -41,6 +43,14 @@ public class AddElementsPanel extends CreateGUIItems {
         parameter = new JTextField();
         parameter.setFont(labelsInfoFont);
         parameter.setBackground(foregroundColor);
+        parameter.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!(c >= '0' && c <= '9')) {
+                    e.consume();
+                }
+            }
+        });
 
         JPanel buttons = new JPanel(new GridLayout(1, 2));
         addElementButtonSmall = addButton("src/img/ADD Small.png");
@@ -63,7 +73,12 @@ public class AddElementsPanel extends CreateGUIItems {
         addButtonItems.setOpaque(true);
         return addButtonItems;
     }
+
     public void SetCancelButtonListener(ActionListener listener) {
         cancelElementButtonSmall.addActionListener(listener);
+    }
+
+    public void SetAddElementButtonListener(ActionListener listener) {
+        addElementButtonSmall.addActionListener(listener);
     }
 }
