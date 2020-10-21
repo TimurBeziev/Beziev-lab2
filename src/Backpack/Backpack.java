@@ -1,5 +1,6 @@
 package Backpack;
 
+import Data.Cube;
 import Data.Parallelepiped;
 import Data.Shape;
 import sun.security.util.ArrayUtil;
@@ -15,13 +16,11 @@ import static javax.swing.JOptionPane.showMessageDialog;
 
 public class Backpack {
     private final ArrayList<Shape> shapes;
-    //    private HashMap<Double, Shape> backpackElements;
     private double backpackVolume;
 
     public Backpack(double backpackVolume) {
         this.backpackVolume = backpackVolume;
         shapes = new ArrayList<Shape>();
-//        backpackElements = new HashMap<>();
     }
 
     public void addShape(Shape shape) throws Exception {
@@ -49,11 +48,8 @@ public class Backpack {
 
     private Integer InsertionIndex(Double newVolume) {
         int insertionIndex = 0;
-        for (int i = 0; i < shapes.size(); i++) {
-            insertionIndex = i;
-            if (newVolume >= shapes.get(i).getVolume()) {
-                return insertionIndex;
-            }
+        while (insertionIndex < shapes.size() && newVolume <= shapes.get(insertionIndex).getVolume()) {
+            insertionIndex++;
         }
 
         return insertionIndex;
@@ -64,6 +60,7 @@ public class Backpack {
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("Item");
         model.addColumn("Volume");
+
         for (Shape shape : shapes) {
             String volume = String.format("%.4f", shape.getVolume());
             model.addRow(new Object[]{shape.toString(), volume});

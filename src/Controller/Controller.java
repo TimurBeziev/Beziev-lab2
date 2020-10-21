@@ -113,6 +113,8 @@ public class Controller {
                     break;
 
                 case ("Parallelepiped"):
+//                    не спрашивайте меня в чем разница параллелепипеда и куба :)
+//                    так надо!
                     try {
                         backpack.addShape(new Parallelepiped(shapeParameter, shapeParameter, shapeParameter));
                     } catch (Exception exception) {
