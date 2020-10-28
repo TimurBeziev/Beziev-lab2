@@ -26,6 +26,14 @@ public class Backpack {
         shapes = new ArrayList<Shape>();
     }
 
+    public void CleanBackpack() {
+        shapes.clear();
+    }
+
+    public void SetBackpackVolume(double backpackVolume) {
+        this.backpackVolume = backpackVolume;
+    }
+
     public void addShape(Shape shape) throws Exception {
         backpackVolume -= shape.getVolume();
         if (backpackVolume < 0) {
@@ -34,7 +42,6 @@ public class Backpack {
                     "Не стоит класть такие большие предметы");
             throw new Exception("Backpack is already full!!!");
         } else {
-//            backpackElements.put(shape.getVolume(), shape);
             shapes.add(InsertionIndex(shape.getVolume()), shape);
         }
     }

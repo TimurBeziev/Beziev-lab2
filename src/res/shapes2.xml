@@ -1,2 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<shapes/>
+<shapes>
+<backpackVolume>3000</backpackVolume>
+<shape>
+<shapeName>Cube</shapeName>
+<shapeVolume>1000,0000</shapeVolume>
+</shape>
+<shape>
+<shapeName>Cylinder</shapeName>
+<shapeVolume>84,8230</shapeVolume>
+</shape>
+<shape>
+<shapeName>Cube</shapeName>
+<shapeVolume>0,0000</shapeVolume>
+</shape>
+</shapes>

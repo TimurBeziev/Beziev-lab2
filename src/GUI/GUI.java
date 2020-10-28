@@ -34,13 +34,13 @@ public class GUI extends CreateGUIItems {
     private double vol;
 
     public GUI() throws IOException {
-        JFrame mainscene = new JFrame("Laba 2");
+        JFrame mainscene = new JFrame("Laba 3");
         JPanel firstLayer = new JPanel();
 
         menuBar = new JMenuBar();
         menu = new JMenu("Menu");
         loadFromFile = new JMenuItem("Load From File");
-        readToFile = new JMenuItem("Read To File");
+        readToFile = new JMenuItem("Save To File");
 
         menu.add(loadFromFile);
         menu.add(readToFile);
@@ -177,7 +177,6 @@ public class GUI extends CreateGUIItems {
             RemoveElement(i);
         }
     }
-
 
     public void RemoveElement(int index) {
         model.removeRow(index);

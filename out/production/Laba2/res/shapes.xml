@@ -1,4 +1,5 @@
 <shapes>
+    <backpackVolume>400</backpackVolume>
     <shape>
         <shapeName>Cube</shapeName>
         <shapeVolume>22</shapeVolume>
