@@ -1,0 +1,10 @@
+<shapes>
+    <shape>
+        <shapeName>Paral</shapeName>
+        <shapeVolume>220</shapeVolume>
+    </shape>
+    <shape>
+        <shapeName>Cube</shapeName>
+        <shapeVolume>22</shapeVolume>
+    </shape>
+</shapes>

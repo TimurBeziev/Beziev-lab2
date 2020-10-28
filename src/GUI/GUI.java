@@ -154,9 +154,6 @@ public class GUI extends CreateGUIItems {
         }
     }
 
-//    public JTable GetTable() {
-//        return backpackInfo;
-//    }
 
     public void RemoveElement(int index) {
         model.removeRow(index);

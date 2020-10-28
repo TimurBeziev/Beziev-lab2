@@ -10,12 +10,26 @@ import GUI.GUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
+import java.util.Vector;
 
 import GUI.AddElementsPanel;
 import GUI.PHDPannel;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 public class Controller {
     GUI gui;
@@ -86,6 +100,15 @@ public class Controller {
                 phdPannel.setVisible(true);
                 isAnyButtonEnabled = false;
             }
+
+            try {
+                DefaultTableModel model = backpack.getShapesInfo();
+                WriteXML(model);
+//                System.out.println(data);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+
         }
     }
 
@@ -105,7 +128,11 @@ public class Controller {
                 }
 
                 String volume = String.format("%.1f", backpack.GetBackpackVolume());
-                gui.UpdateBackpackInfo(backpack.getShapesInfo(), volume);
+                try {
+                    gui.UpdateBackpackInfo(backpack.getShapesInfo(), volume);
+                } catch (Exception parserConfigurationException) {
+                    parserConfigurationException.printStackTrace();
+                }
             }
         }
     }
@@ -165,10 +192,54 @@ public class Controller {
             }
 //            сделал немного очень через... ноги. Ну да ладно
             String volume = String.format("%.1f", backpack.GetBackpackVolume());
-            gui.UpdateBackpackInfo(backpack.getShapesInfo(), volume);
+            try {
+                gui.UpdateBackpackInfo(backpack.getShapesInfo(), volume);
+            } catch (Exception parserConfigurationException) {
+                parserConfigurationException.printStackTrace();
+            }
         }
     }
 
+    public void WriteXML(DefaultTableModel model) throws ParserConfigurationException, TransformerException {
+        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+
+//        Vector data = model.getDataVector();
+
+        // root elements
+        Document doc = docBuilder.newDocument();
+
+        Element rootElement = doc.createElement("shapes");
+        doc.appendChild(rootElement);
+
+        // staff elements
+        Element staff = doc.createElement("shape");
+        rootElement.appendChild(staff);
+        for (int i = 0; i < model.getRowCount(); i++) {
+            Element firstname = doc.createElement("shapeName");
+            firstname.appendChild(doc.createTextNode((String) model.getValueAt(i, 0)));
+            staff.appendChild(firstname);
+
+            Element lastname = doc.createElement("shapeVolume");
+            lastname.appendChild(doc.createTextNode(String.valueOf(model.getValueAt(i, 1))));
+            staff.appendChild(lastname);
+        }
+
+
+        // write the content into xml file
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        DOMSource source = new DOMSource(doc);
+        StreamResult result = new StreamResult(new File("src/res/shapes2.xml"));
+
+        // Output to console for testing
+        // StreamResult result = new StreamResult(System.out);
+
+        transformer.transform(source, result);
+
+        System.out.println("File saved!");
+    }
 }
 
 
