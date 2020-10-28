@@ -1,1 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><shapes><shape><shapeName>Cube</shapeName><shapeVolume>22,0000</shapeVolume><shapeName>Cube</shapeName><shapeVolume>22,0000</shapeVolume><shapeName>Cube</shapeName><shapeVolume>22,0000</shapeVolume><shapeName>Cube</shapeName><shapeVolume>22,0000</shapeVolume><shapeName>Cube</shapeName><shapeVolume>0,0000</shapeVolume><shapeName>Cube</shapeName><shapeVolume>0,0000</shapeVolume><shapeName>Cube</shapeName><shapeVolume>0,0000</shapeVolume></shape></shapes>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<shapes>
+<shape>
+<shapeName>Cylinder</shapeName>
+<shapeVolume>3,1416</shapeVolume>
+</shape>
+<shape>
+<shapeName>Cube</shapeName>
+<shapeVolume>1,0000</shapeVolume>
+</shape>
+</shapes>

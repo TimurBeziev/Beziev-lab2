@@ -1,5 +1,6 @@
 package Backpack;
 
+import Controller.Controller;
 import Data.*;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
@@ -57,72 +58,16 @@ public class Backpack {
         return insertionIndex;
     }
 
-
     public DefaultTableModel getShapesInfo() throws Exception {
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("Item");
         model.addColumn("Volume");
-
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
-
-        //Build Document
-        Document document = builder.parse(new File("src/res/shapes.xml"));
-
-        //Normalize the XML Structure; It's just too important !!
-        document.getDocumentElement().normalize();
-
-        //Here comes the root node
-        Element root = document.getDocumentElement();
-        System.out.println(root.getNodeName());
-
-        //Get all employees
-        NodeList nList = document.getElementsByTagName("shape");
-        System.out.println("============================");
-
-        for (int temp = 0; temp < nList.getLength(); temp++) {
-            Node node = nList.item(temp);
-            System.out.println("");    //Just a separator
-            if (node.getNodeType() == Node.ELEMENT_NODE) {
-                Element eElement = (Element) node;
-                AddShapeFromFile(eElement.getElementsByTagName("shapeName").item(0).getTextContent(), Double.parseDouble(eElement.getElementsByTagName("shapeVolume").item(0).getTextContent()));
-            }
-        }
 
         for (Shape shape : shapes) {
             String volume = String.format("%.4f", shape.getVolume());
             model.addRow(new Object[]{shape.toString(), volume});
         }
         return model;
-    }
-
-    void AddShapeFromFile(String shapeName, double shapeVolume) throws Exception {
-
-        switch (Objects.requireNonNull(shapeName)) {
-            case ("Cube"):
-                Cube cube = new Cube(0);
-                cube.setVolume(shapeVolume);
-                addShape(cube);
-                break;
-
-            case ("Cylinder"):
-                Cylinder cylinder = new Cylinder(0, 0);
-                cylinder.setVolume(shapeVolume);
-                addShape(cylinder);
-                break;
-
-            case ("Parallelepiped"):
-                Parallelepiped parallelepiped = new Parallelepiped(0, 0, 0);
-                parallelepiped.setVolume(shapeVolume);
-                addShape(parallelepiped);
-                break;
-
-            case ("Sphere"):
-                Sphere sphere = new Sphere(0);
-                sphere.setVolume(shapeVolume);
-                addShape(sphere);
-                break;
-        }
     }
 
 }

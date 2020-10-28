@@ -1,10 +1,22 @@
 <shapes>
     <shape>
-        <shapeName>Paral</shapeName>
-        <shapeVolume>220</shapeVolume>
+        <shapeName>Cube</shapeName>
+        <shapeVolume>22</shapeVolume>
+    </shape>
+    <shape>
+        <shapeName>Sphere</shapeName>
+        <shapeVolume>3</shapeVolume>
     </shape>
     <shape>
         <shapeName>Cube</shapeName>
-        <shapeVolume>22</shapeVolume>
+        <shapeVolume>2</shapeVolume>
+    </shape>
+    <shape>
+        <shapeName>Cube</shapeName>
+        <shapeVolume>1</shapeVolume>
+    </shape>
+    <shape>
+        <shapeName>Cube</shapeName>
+        <shapeVolume>1</shapeVolume>
     </shape>
 </shapes>

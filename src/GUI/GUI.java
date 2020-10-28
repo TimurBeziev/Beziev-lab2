@@ -28,11 +28,27 @@ public class GUI extends CreateGUIItems {
     private JButton deleteButton;
     private JButton phdButton;
     private DefaultTableModel model;
+    static JMenuBar menuBar;
+    static JMenu menu;
+    static JMenuItem loadFromFile, readToFile;
     private double vol;
 
     public GUI() throws IOException {
         JFrame mainscene = new JFrame("Laba 2");
         JPanel firstLayer = new JPanel();
+
+        menuBar = new JMenuBar();
+        menu = new JMenu("Menu");
+        loadFromFile = new JMenuItem("Load From File");
+        readToFile = new JMenuItem("Read To File");
+
+        menu.add(loadFromFile);
+        menu.add(readToFile);
+
+        menuBar.add(menu);
+
+        mainscene.setJMenuBar(menuBar);
+
 
         firstLayer.setLayout(new BoxLayout(firstLayer, BoxLayout.X_AXIS));
         JPanel buttonsPanel = CreateButtonsPanel();
@@ -95,7 +111,7 @@ public class GUI extends CreateGUIItems {
         model = new DefaultTableModel();
         model.addColumn("Item");
         model.addColumn("Volume");
- 
+
         backpackInfo.setModel(model);
 
         backpackInfo.setBackground(backgroundColor);
@@ -131,6 +147,14 @@ public class GUI extends CreateGUIItems {
 
     public void SetPHDButtonListener(ActionListener listener) {
         phdButton.addActionListener(listener);
+    }
+
+    public void SetLoadFromFileActionListener(ActionListener listener) {
+        loadFromFile.addActionListener(listener);
+    }
+
+    public void SetReadToFileActionListener(ActionListener listener) {
+        readToFile.addActionListener(listener);
     }
 
     public void AddPanelToLayers(JPanel panel, int constraints, int index) {

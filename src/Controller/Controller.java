@@ -17,12 +17,11 @@ import java.util.Vector;
 
 import GUI.AddElementsPanel;
 import GUI.PHDPannel;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
+import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -82,6 +81,12 @@ public class Controller {
         ActionListener phdImageButtonListner = new PHDImageButtonListener();
         pannel.SetCancelButtonListener(phdImageButtonListner);
 
+        ActionListener loadFromFileListener = new LoadFromFileListener();
+        gui.SetLoadFromFileActionListener(loadFromFileListener);
+
+        ActionListener readToFileListener = new ReadToFileListener();
+        gui.SetReadToFileActionListener(readToFileListener);
+
     }
 
     public class AddButtonListener implements ActionListener {
@@ -99,14 +104,6 @@ public class Controller {
             if (isAnyButtonEnabled) {
                 phdPannel.setVisible(true);
                 isAnyButtonEnabled = false;
-            }
-
-            try {
-                DefaultTableModel model = backpack.getShapesInfo();
-                WriteXML(model);
-//                System.out.println(data);
-            } catch (Exception exception) {
-                exception.printStackTrace();
             }
 
         }
@@ -200,6 +197,38 @@ public class Controller {
         }
     }
 
+    public class LoadFromFileListener implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+            JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+
+            int returnValue = jfc.showOpenDialog(null);
+
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = jfc.getSelectedFile();
+                try {
+                    ParseXML(selectedFile.getAbsolutePath());
+                    System.out.println(selectedFile.getAbsolutePath());
+                } catch (Exception parserConfigurationException) {
+                    parserConfigurationException.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public class ReadToFileListener implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+            try {
+                DefaultTableModel model = backpack.getShapesInfo();
+                WriteXML(model);
+//                System.out.println(data);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
+
     public void WriteXML(DefaultTableModel model) throws ParserConfigurationException, TransformerException {
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -213,9 +242,9 @@ public class Controller {
         doc.appendChild(rootElement);
 
         // staff elements
-        Element staff = doc.createElement("shape");
-        rootElement.appendChild(staff);
         for (int i = 0; i < model.getRowCount(); i++) {
+            Element staff = doc.createElement("shape");
+            rootElement.appendChild(staff);
             Element firstname = doc.createElement("shapeName");
             firstname.appendChild(doc.createTextNode((String) model.getValueAt(i, 0)));
             staff.appendChild(firstname);
@@ -240,6 +269,71 @@ public class Controller {
 
         System.out.println("File saved!");
     }
+
+    private void ParseXML(String strPath) throws Exception {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+
+        //Build Document
+        Document document = builder.parse(new File(strPath));
+
+        //Normalize the XML Structure; It's just too important !!
+        document.getDocumentElement().normalize();
+
+        //Here comes the root node
+        Element root = document.getDocumentElement();
+        System.out.println(root.getNodeName());
+
+        //Get all employees
+        NodeList nList = document.getElementsByTagName("shape");
+
+        for (int temp = 0; temp < nList.getLength(); temp++) {
+            Node node = nList.item(temp);
+            System.out.println("");    //Just a separator
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                Element eElement = (Element) node;
+                String volume = eElement.getElementsByTagName("shapeVolume").item(0).getTextContent();
+                volume = volume.replace(',', '.');
+                AddShapeWithVolumeFromFile(eElement.getElementsByTagName("shapeName").item(0).getTextContent(), Double.parseDouble(volume));
+            }
+        }
+        String volume = String.format("%.1f", backpack.GetBackpackVolume());
+        try {
+            gui.UpdateBackpackInfo(backpack.getShapesInfo(), volume);
+        } catch (Exception parserConfigurationException) {
+            parserConfigurationException.printStackTrace();
+        }
+    }
+
+    void AddShapeWithVolumeFromFile(String shapeName, double shapeVolume) throws Exception {
+        // дубликация кода, понимаю, но слишком торопился и не смог бы починить по-быстрому
+        switch (Objects.requireNonNull(shapeName)) {
+            case ("Cube"):
+                Cube cube = new Cube(0);
+                cube.setVolume(shapeVolume);
+                backpack.addShape(cube);
+                break;
+
+            case ("Cylinder"):
+                Cylinder cylinder = new Cylinder(0, 0);
+                cylinder.setVolume(shapeVolume);
+                backpack.addShape(cylinder);
+                break;
+
+            case ("Parallelepiped"):
+                Parallelepiped parallelepiped = new Parallelepiped(0, 0, 0);
+                parallelepiped.setVolume(shapeVolume);
+                backpack.addShape(parallelepiped);
+                break;
+
+            case ("Sphere"):
+                Sphere sphere = new Sphere(0);
+                sphere.setVolume(shapeVolume);
+                backpack.addShape(sphere);
+                break;
+        }
+    }
+
 }
 
 
