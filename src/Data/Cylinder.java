@@ -2,13 +2,17 @@ package Data;
 
 public class Cylinder extends Shape {
     public Cylinder(double r, double h) {
-        this.radius = r;
-        this.height = h;
+        this.volume = Math.PI * r * r * h;
     }
 
     @Override
     public double getVolume() {
-        return Math.PI * radius * radius * height;
+        return this.volume;
+    }
+
+    @Override
+    public void setVolume(double volume) {
+        this.volume = volume;
     }
 
     @Override
@@ -16,6 +20,5 @@ public class Cylinder extends Shape {
         return "Cylinder";
     }
 
-    private final double radius;
-    private final double height;
+    private double volume;
 }

@@ -2,12 +2,17 @@ package Data;
 
 public class Sphere extends Shape {
     public Sphere(double radius) {
-        this.radius = radius;
+        this.volume = 4 * Math.PI * radius * radius * radius / 3;
     }
 
     @Override
     public double getVolume() {
-        return 4 * Math.PI * radius * radius * radius / 3;
+        return this.volume;
+    }
+
+    @Override
+    public void setVolume(double volume) {
+        this.volume = volume;
     }
 
     @Override
@@ -16,5 +21,5 @@ public class Sphere extends Shape {
     }
 
 
-    private final double radius;
+    private double volume;
 }

@@ -2,14 +2,17 @@ package Data;
 
 public class Parallelepiped extends Shape {
     public Parallelepiped(double l, double w, double h) {
-        this.height = h;
-        this.width = w;
-        this.length = l;
+        this.volume = h * w * l;
     }
 
     @Override
     public double getVolume() {
-        return height * width * length;
+        return this.volume;
+    }
+
+    @Override
+    public void setVolume(double volume) {
+        this.volume = volume;
     }
 
     @Override
@@ -17,8 +20,6 @@ public class Parallelepiped extends Shape {
         return "Parallelepiped";
     }
 
-    private final double width;
-    private final double height;
-    private final double length;
+    private double volume;
 
 }

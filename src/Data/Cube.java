@@ -2,12 +2,17 @@ package Data;
 
 public class Cube extends Shape {
     public Cube(double length) {
-        this.length = length;
+        this.volume = length * length * length;
     }
 
     @Override
     public double getVolume() {
-        return length * length * length;
+        return this.volume;
+    }
+
+    @Override
+    public void setVolume(double volume) {
+        this.volume = volume;
     }
 
     @Override
@@ -15,5 +20,5 @@ public class Cube extends Shape {
         return "Cube";
     }
 
-    private final double length;
+    private double volume;
 }

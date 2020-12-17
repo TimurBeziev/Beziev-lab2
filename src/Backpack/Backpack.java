@@ -1,15 +1,18 @@
 package Backpack;
 
-import Data.Cube;
-import Data.Parallelepiped;
-import Data.Shape;
+import Controller.Controller;
+import Data.*;
+import org.w3c.dom.*;
+import org.xml.sax.SAXException;
 import sun.security.util.ArrayUtil;
 
 import javax.swing.table.DefaultTableModel;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.ListIterator;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
 import static javax.swing.JOptionPane.showMessageDialog;
 
@@ -23,6 +26,14 @@ public class Backpack {
         shapes = new ArrayList<Shape>();
     }
 
+    public void CleanBackpack() {
+        shapes.clear();
+    }
+
+    public void SetBackpackVolume(double backpackVolume) {
+        this.backpackVolume = backpackVolume;
+    }
+
     public void addShape(Shape shape) throws Exception {
         backpackVolume -= shape.getVolume();
         if (backpackVolume < 0) {
@@ -31,7 +42,6 @@ public class Backpack {
                     "Не стоит класть такие большие предметы");
             throw new Exception("Backpack is already full!!!");
         } else {
-//            backpackElements.put(shape.getVolume(), shape);
             shapes.add(InsertionIndex(shape.getVolume()), shape);
         }
     }
@@ -55,8 +65,7 @@ public class Backpack {
         return insertionIndex;
     }
 
-
-    public DefaultTableModel getShapesInfo() {
+    public DefaultTableModel getShapesInfo() throws Exception {
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("Item");
         model.addColumn("Volume");
@@ -69,3 +78,4 @@ public class Backpack {
     }
 
 }
+
